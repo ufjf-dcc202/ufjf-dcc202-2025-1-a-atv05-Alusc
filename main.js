@@ -4,8 +4,12 @@ eH1.textContent = "Olá mundo!";
 const eTabuleiro = criaTabuleiro();
 document.body.appendChild(eTabuleiro);
 
-const pecinha1 = criaPecinha("preto");
-eTabuleiro.appendChild(pecinha1);
+
+for (let i = 0; i < 7; i++) {
+    if (i === 3) continue;
+    const pecinha = criaPecinha(i < 3 ? "branco": "preto", i);
+    eTabuleiro.appendChild(pecinha);
+}
 
 function criaTabuleiro() {
     const eTabuleiro = document.createElement("div");
@@ -13,9 +17,10 @@ function criaTabuleiro() {
     return eTabuleiro;
 }
 
-function criaPecinha(cor){
+function criaPecinha(cor, posicao){
     const novaPecinha = document.createElement("div");
     novaPecinha.classList.add("pecinha");
     novaPecinha.dataset.cor = cor;
+    novaPecinha.dataset.posicao = posicao;
     return novaPecinha;
 }

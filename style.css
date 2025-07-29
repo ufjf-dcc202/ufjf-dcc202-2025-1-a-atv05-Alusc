@@ -11,14 +11,17 @@
 }
 
 .pecinha {
-    background: radial-gradient(circle at top, white, beige);
     width: 100%;
     height: 100%;
-    border: 2px solid black;
     border-radius: 50%;
 }
-.pecinha[data-cor="preto"]{
-    background: radial-gradient(circle at top, rgb(39, 38, 38), rgb(0, 0, 0));;
+.pecinha[data-cor="p"]{
+    background: radial-gradient(circle at top, rgb(39, 38, 38), rgb(0, 0, 0));
+    border: 2px solid black;
+}
+.pecinha[data-cor="b"]{
+    background: radial-gradient(circle at top, white, beige);
+    border: 2px solid black;
 }
 .pecinha[data-posicao="0"]{
     grid-column: 1;

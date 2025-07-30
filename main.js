@@ -1,4 +1,4 @@
-import { getTabuleiro, seleciona } from "./pecinhas.js";
+import { getTabuleiro, tentarMoverPecinha } from "./pecinhas.js";
 
 const eH1 = document.querySelector("h1");
 eH1.textContent = "Olá mundo!";
@@ -6,12 +6,16 @@ eH1.textContent = "Olá mundo!";
 const eTabuleiro = criaTabuleiro();
 document.body.appendChild(eTabuleiro);
 
-const tabuleiro = getTabuleiro();
+atualizarTabuleiro();
 
-for (let i = 0; i < 7; i++) {
-    const pecinha = criaPecinha(tabuleiro[i], i);
-    eTabuleiro.appendChild(pecinha);
-    pecinha.addEventListener("click", cliquePecinha);
+function atualizarTabuleiro() {
+    const tabuleiro = getTabuleiro();
+    eTabuleiro.innerHTML = '';
+    for (let i = 0; i < 7; i++) {
+        const pecinha = criaPecinha(tabuleiro[i], i);
+        eTabuleiro.appendChild(pecinha);
+        pecinha.addEventListener("click", cliquePecinha);
+    }
 }
 
 function criaTabuleiro() {
@@ -34,21 +38,24 @@ let pecinha2 = null;
 function tentarMover(){
     if (!pecinha1 || !pecinha2)
         return;
-    const posicao1 = Number(pecinha1.target.dataset.posicao);
-    const posicao2 = Number(pecinha2.target.dataset.posicao);
-    seleciona(posicao1);
-    seleciona(posicao2);
-    pecinha1.dataset.posicao = pecinha2.dataset.posicao;
+    tentarMoverPecinha(
+        parseInt(pecinha1.dataset.posicao),
+        parseInt(pecinha2.dataset.posicao)
+    );
+    atualizarTabuleiro();
     pecinha1 = null;
-    pecinha2 = null; 
-
+    pecinha2 = null;
 }
 
+function cliquePecinha(){
+    if (!pecinha1 && this.dataset.cor){ 
+        pecinha1 = this;
+        pecinha2 = null;
+        return;
+    }
 
-function cliquePecinha(evento){
-    if (!pecinha1)
-        pecinha1 = evento.target;
-    else if (!pecinha2)
-        pecinha2 = evento.target;
-    tentarMover();
+    if (!pecinha2 && !this.dataset.cor){
+        pecinha2 = this;
+        tentarMover();
+    }
 }
